@@ -32,7 +32,7 @@ function connected() {
 function refreshButtons() {
     const on = connected();
     $("connect").textContent = on ? "Disconnect" : "Connect";
-    $("status").textContent = on ? "Connected to the board, " + megabytes(link.info.free) + " free" : link ? "Connecting..." : "Not connected";
+    $("status").textContent = on ? "Connected to " + (link.info.board || "the board") + ", " + megabytes(link.info.free) + " free" : link ? "Connecting..." : "Not connected";
     $("status").dataset.on = on;
     $("baud").disabled = link !== null;
     $("mirrorToggle").disabled = !on || busy;
@@ -70,7 +70,7 @@ async function connect(port) {
         refreshButtons();
         return;
     }
-    log("Connected to the board");
+    log("Connected to " + link.info.board);
     refreshButtons();
     await refreshLists();
     if (mirrorWanted !== MIRROR.OFF) await startMirror();
