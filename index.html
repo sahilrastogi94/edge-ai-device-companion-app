@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Avishkaar Edge AI Device over USB</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div>
+            <h1>Avishkaar Edge AI Device over USB</h1>
+            <p id="status">Not connected</p>
+        </div>
+        <div class="actions">
+            <label>Baud rate
+                <select id="baud">
+                    <option>115200</option>
+                    <option>230400</option>
+                    <option>460800</option>
+                    <option>921600</option>
+                    <option>2000000</option>
+                </select>
+            </label>
+            <button id="connect" class="primary">Connect</button>
+        </div>
+    </header>
+
+    <p id="unsupported" class="banner" hidden>This page talks to the board through Web Serial, which only Chrome and Edge on a computer have.</p>
+
+    <main>
+        <section class="wide">
+            <div class="title">
+                <h2>Screen Mirror</h2>
+                <div class="actions">
+                    <label class="choice"><input type="radio" name="size" value="half" checked> Half size</label>
+                    <label class="choice"><input type="radio" name="size" value="full"> Full size</label>
+                    <button id="mirrorToggle">Start mirror</button>
+                </div>
+            </div>
+            <div class="screen-frame">
+                <canvas id="screen" width="552" height="368"></canvas>
+                <p id="screenEmpty">The board's screen shows here</p>
+            </div>
+            <p class="note"><span id="mirrorNote"></span> <span id="mirrorStats"></span></p>
+        </section>
+
+        <section>
+            <div class="title"><h2>Programs</h2></div>
+            <label class="field">Program file (.py)
+                <input type="file" id="programFile" accept=".py">
+            </label>
+            <label class="field">Name on the board
+                <input type="text" id="programName" maxlength="24" spellcheck="false" autocomplete="off">
+            </label>
+            <p id="programHint" class="hint"></p>
+            <div class="actions">
+                <button id="programUpload" class="primary">Upload program</button>
+                <button class="cancel" hidden>Cancel</button>
+            </div>
+            <progress id="programBar" hidden></progress>
+            <p id="programBarText" class="note"></p>
+            <h3>On the board</h3>
+            <ul id="programList" class="rows"></ul>
+        </section>
+
+        <section>
+            <div class="title"><h2>Apps</h2></div>
+            <label class="field">An app as a .zip
+                <input type="file" id="appZip" accept=".zip">
+            </label>
+            <label class="field">Or its folder
+                <input type="file" id="appFolder" webkitdirectory>
+            </label>
+            <p id="appHint" class="hint"></p>
+            <div class="actions">
+                <button id="appInstall" class="primary">Install app</button>
+                <button class="cancel" hidden>Cancel</button>
+            </div>
+            <progress id="appBar" hidden></progress>
+            <p id="appBarText" class="note"></p>
+            <h3>On the board</h3>
+            <ul id="appList" class="rows"></ul>
+        </section>
+
+        <section class="wide">
+            <div class="title">
+                <h2>Link</h2>
+                <div class="actions">
+                    <button id="refresh">Refresh lists</button>
+                    <button id="speedTest">Test speed</button>
+                </div>
+            </div>
+            <p id="speedResult" class="note"></p>
+            <ul id="log"></ul>
+        </section>
+    </main>
+
+    <script src="usb_link.js"></script>
+    <script src="zip.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
